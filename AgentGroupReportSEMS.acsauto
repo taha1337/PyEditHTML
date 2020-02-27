@@ -1,0 +1,51 @@
+'LANGUAGE=ENU
+'SERVERNAME=
+Public Sub Main()
+
+'## cvs_cmd_begin
+'## ID = 2003
+'## Description = "Report: Real-Time: Agent: Agent Group Report: Export Data"
+'## Parameters.Add "Report: Real-Time: Agent: Agent Group Report: Export Data","_Desc"
+'## Parameters.Add "Reports","_Catalog"
+'## Parameters.Add "2","_Action"
+'## Parameters.Add "1","_Quit"
+'## Parameters.Add "Real-Time\Agent\Agent Group Report","_Report"
+'## Parameters.Add "1","_ACD"
+'## Parameters.Add "7950","_Top"
+'## Parameters.Add "8985","_Left"
+'## Parameters.Add "15660","_Width"
+'## Parameters.Add "6930","_Height"
+'## Parameters.Add "default","_TimeZone"
+'## Parameters.Add "The report Real-Time\Agent\Agent Group Report was not found on ACD 1.","_ReportNotFound"
+'## Parameters.Add "*","_BeginProperties"
+'## Parameters.Add "SEMS","Agent Group"
+'## Parameters.Add "*","_EndProperties"
+'## Parameters.Add "*","_BeginViews"
+'## Parameters.Add "G0,0,0;-1,2,0","data"
+'## Parameters.Add "*","_EndViews"
+'## Parameters.Add "<DESTINATION FILE PATH FOR TXT FILE>","_Output"
+'## Parameters.Add "32","_FldSep"
+'## Parameters.Add "0","_TextDelim"
+'## Parameters.Add "True","_NullToZero"
+'## Parameters.Add "False","_Labels"
+'## Parameters.Add "True","_DurSecs"
+   On Error Resume Next
+   cvsSrv.Reports.ACD = 1
+   Set Info = cvsSrv.Reports.Reports("Real-Time\Agent\Agent Group Report")
+	   b = cvsSrv.Reports.CreateReport(Info,Rep)
+	   If b Then
+	      Rep.Window.Top = 7950
+	      Rep.Window.Left = 8985
+	      Rep.Window.Width = 15660
+	      Rep.Window.Height = 6930   
+                        Rep.TimeZone = "default"
+	      Rep.SetProperty "Agent Group","SEMS"
+	      Rep.ReportView.Add "G0,0,0;-1,2,0","data"
+	      b = Rep.ExportData("<DESTINATION FILE PATH FOR TXT FILE>", 32, 0, True, False, True)
+	      Rep.Quit
+              If Not cvsSrv.Interactive Then cvsSrv.ActiveTasks.Remove Rep.TaskID
+	      Set Rep = Nothing
+   End If
+   Set Info = Nothing
+'## cvs_cmd_end
+End Sub

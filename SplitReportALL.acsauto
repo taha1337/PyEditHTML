@@ -1,0 +1,53 @@
+'LANGUAGE=ENU
+'SERVERNAME=
+Public Sub Main()
+
+'## cvs_cmd_begin
+'## ID = 2002
+'## Description = "Report: Real-Time: Split/Skill: Split/Skill Report: Export Data"
+'## Parameters.Add "Report: Real-Time: Split/Skill: Split/Skill Report: Export Data","_Desc"
+'## Parameters.Add "Reports","_Catalog"
+'## Parameters.Add "2","_Action"
+'## Parameters.Add "1","_Quit"
+'## Parameters.Add "Real-Time\Split/Skill\Split/Skill Report","_Report"
+'## Parameters.Add "1","_ACD"
+'## Parameters.Add "5175","_Top"
+'## Parameters.Add "7005","_Left"
+'## Parameters.Add "11295","_Width"
+'## Parameters.Add "6090","_Height"
+'## Parameters.Add "default","_TimeZone"
+'## Parameters.Add "The report Real-Time\Split/Skill\Split/Skill Report was not found on ACD 1.","_ReportNotFound"
+'## Parameters.Add "*","_BeginProperties"
+'## Parameters.Add "131;137;160;138;142;129","Splits/Skills"
+'## Parameters.Add "*","_EndProperties"
+'## Parameters.Add "*","_BeginViews"
+'## Parameters.Add "*","_EndViews"
+'## Parameters.Add "<DESTINATION FILE PATH FOR TXT FILE>","_Output"
+'## Parameters.Add "32","_FldSep"
+'## Parameters.Add "0","_TextDelim"
+'## Parameters.Add "True","_NullToZero"
+'## Parameters.Add "False","_Labels"
+'## Parameters.Add "True","_DurSecs"
+
+   On Error Resume Next
+
+   cvsSrv.Reports.ACD = 1
+   Set Info = cvsSrv.Reports.Reports("Real-Time\Split/Skill\Split/Skill Report")
+   b = cvsSrv.Reports.CreateReport(Info,Rep)
+   If b Then
+      Rep.Window.Top = 5175
+      Rep.Window.Left = 7005
+      Rep.Window.Width = 11295
+      Rep.Window.Height = 6090
+      Rep.TimeZone = "default"
+      Rep.SetProperty "Splits/Skills","131;137;160;138;142;129"
+      b = Rep.ExportData("<DESTINATION FILE PATH FOR TXT FILE>", 32, 0, True, False, True)
+      Rep.Quit
+	  
+              If Not cvsSrv.Interactive Then cvsSrv.ActiveTasks.Remove Rep.TaskID
+	      Set Rep = Nothing
+	   End If
+   Set Info = Nothing
+'## cvs_cmd_end
+
+End Sub
