@@ -107,36 +107,14 @@ agentCount = AgentGroupReportHD.__len__() - 2
 agentCountSEMS = AgentGroupReportSEMS.__len__() - 2
 
 word = ""
-skip = "POS Qstns  4215922"
-skip2 = "ATTENDANT TIMEOUT"
-skip3 = "POS from no action"
-skip4 = "HELPDESK"
-skip5 = "HARD DOWN STORE"
-skip6 = "STR SVC Sems"
-skip7 = "ALL OTHER PAYROLL"
-skip8 = "STR SVC Sems"
-skip9 = "SEMS 8009930093X3528"
-skip10 = "INT TIMEOUT"
-skip11 = "NEW INT STR 4214143"
-skip12 = "PAYRLL TIMEOUT"
-skip13 = "SALES AUDIT GMG CASH"
+skip = ["POS Qstns  4215922", "ATTENDANT TIMEOUT", "POS from no action", "HELPDESK", "HARD DOWN STORE", "STR SVC Sems", "ALL OTHER PAYROLL", "STR SVC Sems", "SEMS 8009930093X3528", "INT TIMEOUT", "NEW INT STR 4214143", "PAYRLL TIMEOUT" "SALES AUDIT GMG CASH"]
 agentAUXReason = [""] * agentCount
 agentAUXReasonSEMS = [""] * agentCountSEMS
 ## Agent Group Report HD ##
 for i in range(1,AgentGroupReportHD.__len__()-1): ## filter out the weird VDN
     word = AgentGroupReportHD[i]
-    word = del_str(word,skip)
-    word = del_str(word,skip2)
-    word = del_str(word,skip3)
-    word = del_str(word,skip4)
-    word = del_str(word,skip5)
-    word = del_str(word,skip6)
-    word = del_str(word,skip7)
-    word = del_str(word,skip9)
-    word = del_str(word,skip10)
-    word = del_str(word,skip11)
-    word = del_str(word,skip12)
-    word = del_str(word,skip13)
+    for k in skip:
+        word = del_str(word,j)
     if word == "\n":
         continue
     if word == " ":
@@ -147,19 +125,8 @@ for i in range(1,AgentGroupReportHD.__len__()-1): ## filter out the weird VDN
 ## Agent Group Report SEMS ##
 for i in range(1,AgentGroupReportSEMS.__len__()-1): ## filter out the weird VDN
     word = AgentGroupReportSEMS[i]
-    word = del_str(word,skip)
-    word = del_str(word,skip2)
-    word = del_str(word,skip3)
-    word = del_str(word,skip4)
-    word = del_str(word,skip5)
-    word = del_str(word,skip6)
-    word = del_str(word,skip7)
-    word = del_str(word,skip8)
-    word = del_str(word,skip9)
-    word = del_str(word,skip10)
-    word = del_str(word,skip11)
-    word = del_str(word,skip12)
-    word = del_str(word,skip13)
+    for k in skip:
+        word = del_str(word,k)
     if word == "\n":
         continue
     if word == " ":
